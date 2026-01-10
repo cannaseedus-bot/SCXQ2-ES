@@ -1,44 +1,12 @@
 # @asx/scxq2-es 
 
-
 ````md
 Inline SCXQ2 authoring surface → **Elasticsearch Painless** lowering (safe expression subset).
 ````
-
 <p align="center">
-  <!-- Inline SVG logo (no external deps) -->
-  <svg width="520" height="140" viewBox="0 0 520 140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="SCXQ2-ES">
-    <defs>
-      <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0" stop-color="#16f2aa" stop-opacity="0.95"/>
-        <stop offset="1" stop-color="#00ffd0" stop-opacity="0.55"/>
-      </linearGradient>
-      <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
-        <feGaussianBlur stdDeviation="4" result="b"/>
-        <feMerge>
-          <feMergeNode in="b"/>
-          <feMergeNode in="SourceGraphic"/>
-        </feMerge>
-      </filter>
-    </defs>
 
-    <rect x="8" y="8" width="504" height="124" rx="18" fill="#050a14" stroke="url(#g)" stroke-width="2"/>
-    <g filter="url(#glow)">
-      <text x="26" y="62" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace"
-            font-size="34" fill="#00ffd0">SCXQ2</text>
-      <text x="168" y="62" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace"
-            font-size="34" fill="#16f2aa">→</text>
-      <text x="208" y="62" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace"
-            font-size="34" fill="#00ffd0">Painless</text>
-
-      <text x="26" y="98" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace"
-            font-size="14" fill="rgba(22,242,170,0.78)">
-        expression-only • safe lowering • deterministic policy gates
-      </text>
-    </g>
-  </svg>
 </p>
-````
+
 # SCXQ2-ES README
 ## What this is
 ````
