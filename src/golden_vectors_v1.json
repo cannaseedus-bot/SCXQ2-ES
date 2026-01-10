@@ -1,0 +1,166 @@
+{
+  "format": "scxq2-es.golden.v1",
+  "symbols_hash": "80829fa1b949e5914fd9b34d896a7acdd342e2a3b799ccec455b38fc4d987534",
+  "vectors": [
+    {
+      "name": "score_boost_clamp",
+      "scx": "(_score * (@v('rating') > 4.5 ? 2 : 1)) + @clamp(@v('popularity'), 0, 50)",
+      "opts": {
+        "fields": [
+          "rating",
+          "popularity"
+        ],
+        "params": [],
+        "maxDepth": 32
+      },
+      "expect": {
+        "painless": "return ((_score * (((doc.containsKey('rating') && !doc['rating'].empty ? doc['rating'].value : 0.0) > 4.5) ? 2 : 1)) + Math.min(50, Math.max(0, (doc.containsKey('popularity') && !doc['popularity'].empty ? doc['popularity'].value : 0.0))));",
+        "abi": {
+          "envelope": {
+            "abi": "scxq2->es_painless",
+            "abi_version": 1,
+            "target": "es_painless",
+            "target_version_major": 1,
+            "symbols_hash": "80829fa1b949e5914fd9b34d896a7acdd342e2a3b799ccec455b38fc4d987534",
+            "policy_hash": "a571afba529e5d169963c72b0a85b9f2715a8205737c51ed6a88bfb6ce4a871f",
+            "ast_hash": "fd948419a8e55cdba9ed0ee829cde71637c958c50ba0e118930470cdcac54dfe"
+          },
+          "hash": "f2e8a83ee957722ed6deecec5926764b0a25d467496ae7e638a2aa9b417464c9"
+        }
+      }
+    },
+    {
+      "name": "exists_gate",
+      "scx": "@exists('stock') & (@v('stock') > 0) ? _score * 1.2 : _score * 0.5",
+      "opts": {
+        "fields": [
+          "stock"
+        ],
+        "params": [],
+        "maxDepth": 32
+      },
+      "expect": {
+        "painless": "return (((doc.containsKey('stock') && !doc['stock'].empty) && ((doc.containsKey('stock') && !doc['stock'].empty ? doc['stock'].value : 0.0) > 0)) ? (_score * 1.2) : (_score * 0.5));",
+        "abi": {
+          "envelope": {
+            "abi": "scxq2->es_painless",
+            "abi_version": 1,
+            "target": "es_painless",
+            "target_version_major": 1,
+            "symbols_hash": "80829fa1b949e5914fd9b34d896a7acdd342e2a3b799ccec455b38fc4d987534",
+            "policy_hash": "43e4de916d2f92ee219642c0397296176b1f744d3654ae36315c4345255ccd34",
+            "ast_hash": "e17c723628bb80507b9d84e7c0c593fe1f1fd34830234aac3b84ec0900bf5943"
+          },
+          "hash": "2e0441b6aedf57f5b9a6e79a2cea631bed05323c0038d8d3aae899937759f635"
+        }
+      }
+    },
+    {
+      "name": "params_weight",
+      "scx": "_score * (params.w + @v('rating', 0))",
+      "opts": {
+        "fields": [
+          "rating"
+        ],
+        "params": [
+          "w"
+        ],
+        "maxDepth": 32
+      },
+      "expect": {
+        "painless": "return (_score * (params.w + (doc.containsKey('rating') && !doc['rating'].empty ? doc['rating'].value : 0)));",
+        "abi": {
+          "envelope": {
+            "abi": "scxq2->es_painless",
+            "abi_version": 1,
+            "target": "es_painless",
+            "target_version_major": 1,
+            "symbols_hash": "80829fa1b949e5914fd9b34d896a7acdd342e2a3b799ccec455b38fc4d987534",
+            "policy_hash": "358e533d421850a10156d3ddf122d144796dcbce5200254c730d9fb7453f08c9",
+            "ast_hash": "0e45817e2ef285b6f8de2c899285eeb3bac2ffe1b17b3ae876c5104d10aee4e2"
+          },
+          "hash": "88062e072813232e1db74354e11047d34ff052c242386a2fc33020c01330d470"
+        }
+      }
+    },
+    {
+      "name": "coalesce_null",
+      "scx": "(@v('x', null) ?? 7) + 1",
+      "opts": {
+        "fields": [
+          "x"
+        ],
+        "params": [],
+        "maxDepth": 32
+      },
+      "expect": {
+        "painless": "return (((doc.containsKey('x') && !doc['x'].empty ? doc['x'].value : null) != null ? (doc.containsKey('x') && !doc['x'].empty ? doc['x'].value : null) : 7) + 1);",
+        "abi": {
+          "envelope": {
+            "abi": "scxq2->es_painless",
+            "abi_version": 1,
+            "target": "es_painless",
+            "target_version_major": 1,
+            "symbols_hash": "80829fa1b949e5914fd9b34d896a7acdd342e2a3b799ccec455b38fc4d987534",
+            "policy_hash": "89ff34dd997d763dfb416317b57f78453c27e80fe22aec12ea2b05a80a877f4e",
+            "ast_hash": "3d5debf58058b92e826acf7354b13a0c145f8164ac0e466b9ae288d222caa74b"
+          },
+          "hash": "9a43358da975f155508ac04df919f0ea4388485da70782a91f43a89856c04ef3"
+        }
+      }
+    },
+    {
+      "name": "bool_logic",
+      "scx": "(@exists('a') & true) | false",
+      "opts": {
+        "fields": [
+          "a"
+        ],
+        "params": [],
+        "maxDepth": 32
+      },
+      "expect": {
+        "painless": "return (((doc.containsKey('a') && !doc['a'].empty) && true) || false);",
+        "abi": {
+          "envelope": {
+            "abi": "scxq2->es_painless",
+            "abi_version": 1,
+            "target": "es_painless",
+            "target_version_major": 1,
+            "symbols_hash": "80829fa1b949e5914fd9b34d896a7acdd342e2a3b799ccec455b38fc4d987534",
+            "policy_hash": "932f1d8cd8073437e64eddab279ba059179598cf8b3b0afc9dee02557ebc8b44",
+            "ast_hash": "4a67042445cdabfecbcd9837160e8e76ba6e113f529f48cbbdffd5b756a54cad"
+          },
+          "hash": "1d1cbcd11c75ef1f9485b24cb0d1357dcbee5804d038d8e76dd8c8092efd324b"
+        }
+      }
+    },
+    {
+      "name": "math_ops",
+      "scx": "@pow(@max(@v('a'), 2), 2) + @sqrt(@abs(@v('b', -9)))",
+      "opts": {
+        "fields": [
+          "a",
+          "b"
+        ],
+        "params": [],
+        "maxDepth": 32
+      },
+      "expect": {
+        "painless": "return (Math.pow(Math.max((doc.containsKey('a') && !doc['a'].empty ? doc['a'].value : 0.0), 2), 2) + Math.sqrt(Math.abs((doc.containsKey('b') && !doc['b'].empty ? doc['b'].value : -9))));",
+        "abi": {
+          "envelope": {
+            "abi": "scxq2->es_painless",
+            "abi_version": 1,
+            "target": "es_painless",
+            "target_version_major": 1,
+            "symbols_hash": "80829fa1b949e5914fd9b34d896a7acdd342e2a3b799ccec455b38fc4d987534",
+            "policy_hash": "2d85d4d015b6e2321f2179fb519f43e468f985ef8ce3aa3e3c59f96bf75a59d8",
+            "ast_hash": "9347214f926cc8e32027085f13faeb992bff6ae42a3a27d643ecdc2b2f470b78"
+          },
+          "hash": "f7409ac0887304a8a9cbe1917d7b72fbbe6f7405c9895dc12afc5f9d6e77d30d"
+        }
+      }
+    }
+  ]
+}
