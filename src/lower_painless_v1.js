@@ -21,6 +21,11 @@ import { enforcePolicy } from "./policy_v1.js";
 import { computeAbiEnvelope, computeAbiHash } from "./abi_v1.js";
 
 /* ---------------- Tokenizer ---------------- */
+
+function tokenize(input) {
+  const tokens = [];
+  const re =
+    /\s*([()?:,]|==|!=|<=|>=|\|\||&&|\?\?|[+\-*/%<>&|!]|@?[A-Za-z_][A-Za-z0-9_]*|'[^']*'|"[^"]*"|\d+(?:\.\d+)?|\.\d+)/g;
 /**
  * IMPORTANT:
  * - "??" MUST be matched before single "?" token class.
@@ -117,6 +122,7 @@ function parse(tokens) {
 
   function parsePostfix() {
     let left = parsePrimary();
+    // v1 supports coalesce "a ?? b" (optional; still parsed deterministically)
     // v1 supports coalesce "a ?? b"
     if (peek() === "??") {
       next();
@@ -168,6 +174,7 @@ function parse(tokens) {
       return { type: "number", value: t };
     }
 
+    // params.<name> support (optional)
     // params.<name>
     if (t === "params" && peek() === ".") {
       next(); // dot
@@ -216,11 +223,13 @@ function emit(node) {
 }
 
 function escapeSingleQuoted(s) {
+  // minimal deterministic escaping for painless single-quoted strings
   return s.replace(/\\/g, "\\\\").replace(/'/g, "\\'");
 }
 
 function ensureArity(name, args, min, max) {
   if (args.length < min || args.length > max) {
+    throw new Error(`Call arity error: @${name} expects ${min}${min !== max ? ".." + max : ""} args, got ${args.length}`);
     throw new Error(
       `Call arity error: @${name} expects ${min}${min !== max ? ".." + max : ""} args, got ${args.length}`
     );
@@ -302,6 +311,7 @@ export function compilePainless(input, opts = {}) {
   // policy gate
   enforcePolicy(ast, opts);
 
+  // emit
   const body = emit(ast);
   const painless = `return ${body};`;
 

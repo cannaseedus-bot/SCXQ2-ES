@@ -7,18 +7,6 @@
   "exports": {
     ".": "./dist/index.js"
   },
-  "files": [
-    "dist",
-    "README.md",
-    "LICENSE"
-  ],
-  "scripts": {
-    "build": "node ./src/build.js",
-    "prepublishOnly": "npm run build",
-    "test": "node ./src/selftest.js"
-  "bin": {
-    "scxq2-es-verify": "./dist/bin/scxq2-es-verify.js"
-  },
   "files": ["dist", "README.md", "LICENSE"],
   "scripts": {
     "build": "node src/build.js",
@@ -33,20 +21,11 @@
       "optional": true
     }
   },
-  "keywords": [
-    "scxq2",
-    "asx",
-    "elasticsearch",
-    "painless",
-    "compiler",
-    "transpiler"
-    "abi",
-    "kuhul"
-  ],
+  "keywords": ["scxq2", "asx", "elasticsearch", "painless", "compiler", "abi", "kuhul"],
   "license": "MIT",
   "author": "ASX",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/<YOU>/scxq2-es.git"
+    "url": "git+https://github.com/YOUR_ORG/scxq2-es.git"
   }
 }
