@@ -1,5 +1,5 @@
 
-# @asx/scxq2-es 
+# @asx/scxq2-es  (first we build the gut hub pack then we build the npm pack)
 
 
 ````md
