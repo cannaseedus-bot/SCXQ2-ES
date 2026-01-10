@@ -1,0 +1,12 @@
+{
+  "matrix_policy_version": 1,
+  "max_depth": 64,
+  "allow_network": false,
+  "allow_exec": false,
+  "allow_fs_read": false,
+  "allow_fs_write": false,
+  "allow_idb": true,
+  "allow_crypto": true,
+  "allowed_routes": ["idb.query", "event.reply"],
+  "allowed_plugins": ["idb", "kql"]
+}

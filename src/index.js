@@ -1,27 +1,29 @@
-export { compilePainless } from "./lower_painless_v1.js";
-export { SCXQ2_ES_V1_EBNF } from "./grammar_v1.ebnf.txt.js";
+export { canonicalJSONStringify } from "./lib/canonical_json.js";
+export { sha256hex } from "./lib/hash.js";
 
 export {
-  SCXQ2_ES_ABI_V1,
-  computeAbiEnvelope,
-  computeAbiHash,
+  MATRIX_SYMBOLS_V1,
+  computeSymbolsHash,
+  normalizePolicyV1,
   computePolicyHash,
-  computeSymbolTableHash
-} from "./abi_v1.js";
+  normalizeProgramV1,
+  computeProgramHash,
+  computeIOSchemaHash,
+  computeCapabilitiesHash,
+  computeAbiEnvelopeV1,
+  computeAbiHash
+} from "./abi.js";
 
 export {
-  verifyAbiResult,
-  verifyGoldenVectors,
-  loadGoldenVectorsFromFile
-} from "./abi_verify_v1.js";
+  verifyAbi,
+  verifyProgramAdmission,
+  verifyVectorSet
+} from "./verify.js";
 
 export {
-  scxq2Pack,
-  scxq2Unpack,
-  hasScxq2CC
-} from "./scxq2cc_adapter.js";
+  runProgramWithPlugins
+} from "./vm.js";
 
 export {
-  KUHUL_ES_TARGETS,
-  kuhulToTarget
-} from "./kuhul_adapter.js";
+  matrixVerifyMiddleware
+} from "./middleware/node.js";

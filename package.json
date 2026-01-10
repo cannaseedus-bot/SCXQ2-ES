@@ -1,31 +1,43 @@
 {
-  "name": "@asx/scxq2-es",
+  "name": "@asx/matrix-runtime",
   "version": "0.1.0",
-  "description": "SCXQ2 authoring surface → Elasticsearch Painless lowering (expression-only v1) + ABI binding.",
+  "description": "MATRIX Runtime v0.1: ABI-locked event backend substrate (GraphQL collapsed into MATRIX events) + IDB plane + verifier + host projections.",
   "type": "module",
-  "main": "dist/index.js",
   "exports": {
-    ".": "./dist/index.js"
+    ".": "./dist/index.js",
+    "./abi": "./dist/abi.js",
+    "./verify": "./dist/verify.js",
+    "./middleware/node": "./dist/middleware/node.js"
   },
-  "files": ["dist", "README.md", "LICENSE"],
+  "bin": {
+    "matrix-verify": "./dist/bin/matrix-verify.js",
+    "matrix-vectors": "./dist/bin/matrix-vectors.js"
+  },
+  "files": [
+    "dist",
+    "spec",
+    "schema",
+    "vectors",
+    "plugins",
+    "runtime",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "node src/build.js",
     "prepublishOnly": "npm run build",
-    "test": "node src/selftest.js"
+    "test": "node dist/bin/matrix-vectors.js vectors/matrix.conformance.v1.json"
   },
-  "peerDependencies": {
-    "@asx/scxq2-cc": ">=1.0.0"
-  },
-  "peerDependenciesMeta": {
-    "@asx/scxq2-cc": {
-      "optional": true
-    }
-  },
-  "keywords": ["scxq2", "asx", "elasticsearch", "painless", "compiler", "abi", "kuhul"],
-  "license": "MIT",
-  "author": "ASX",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/YOUR_ORG/scxq2-es.git"
-  }
+  "keywords": [
+    "matrix",
+    "abi",
+    "events",
+    "idb",
+    "kql",
+    "asx",
+    "kuhul",
+    "verifier",
+    "serverless"
+  ],
+  "license": "MIT"
 }

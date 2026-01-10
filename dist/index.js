@@ -1,2 +1,29 @@
-export { compilePainless } from "./lower_painless_v1.js";
-export { SCXQ2_ES_V1_EBNF } from "./grammar_v1.ebnf.txt.js";
+export { canonicalJSONStringify } from "./lib/canonical_json.js";
+export { sha256hex } from "./lib/hash.js";
+
+export {
+  MATRIX_SYMBOLS_V1,
+  computeSymbolsHash,
+  normalizePolicyV1,
+  computePolicyHash,
+  normalizeProgramV1,
+  computeProgramHash,
+  computeIOSchemaHash,
+  computeCapabilitiesHash,
+  computeAbiEnvelopeV1,
+  computeAbiHash
+} from "./abi.js";
+
+export {
+  verifyAbi,
+  verifyProgramAdmission,
+  verifyVectorSet
+} from "./verify.js";
+
+export {
+  runProgramWithPlugins
+} from "./vm.js";
+
+export {
+  matrixVerifyMiddleware
+} from "./middleware/node.js";

@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "kuhul://schema/matrix/event/v1",
+  "title": "matrix.event.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["event", "v", "id", "ts", "actor", "scope", "input", "proof"],
+  "properties": {
+    "event": { "type": "string", "minLength": 1 },
+    "v": { "const": 1 },
+    "id": { "type": "string", "minLength": 8 },
+    "ts": { "type": "integer", "minimum": 0 },
+
+    "actor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["user_id", "session_id"],
+      "properties": {
+        "user_id": { "type": "string" },
+        "session_id": { "type": "string" }
+      }
+    },
+
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["app_id", "tenant"],
+      "properties": {
+        "app_id": { "type": "string" },
+        "tenant": { "type": "string" }
+      }
+    },
+
+    "input": { "type": "object" },
+    "claims": { "type": "object", "default": {} },
+
+    "proof": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["abi_hash", "policy_hash"],
+      "properties": {
+        "abi_hash": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "policy_hash": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "sig": { "type": "string" }
+      }
+    }
+  }
+}
