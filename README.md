@@ -1,9 +1,9 @@
-# SCXQ2-ES README
+# @asx/scxq2-es 
+
 
 ````md
-# @asx/scxq2-es
-
 Inline SCXQ2 authoring surface → **Elasticsearch Painless** lowering (safe expression subset).
+````
 
 <p align="center">
   <!-- Inline SVG logo (no external deps) -->
@@ -38,9 +38,10 @@ Inline SCXQ2 authoring surface → **Elasticsearch Painless** lowering (safe exp
     </g>
   </svg>
 </p>
-
+````
+# SCXQ2-ES README
 ## What this is
-
+````
 `@asx/scxq2-es` provides a **v1 expression surface grammar** and a lowering pipeline to emit **Elasticsearch Painless** scripts for:
 
 - `script_score` (function_score / script_score)
@@ -48,7 +49,7 @@ Inline SCXQ2 authoring surface → **Elasticsearch Painless** lowering (safe exp
 - scripted metric/avg/sum aggregations
 
 **V1 is intentionally expression-only**: no loops, no statement blocks, no dynamic imports.
-
+````
 ## Install
 
 ```bash
