@@ -1,7 +1,7 @@
 {
   "name": "@asx/scxq2-es",
   "version": "0.1.0",
-  "description": "SCXQ2 authoring surface → Elasticsearch Painless lowering (expression-only v1).",
+  "description": "SCXQ2 authoring surface → Elasticsearch Painless lowering (expression-only v1) + ABI binding.",
   "type": "module",
   "main": "dist/index.js",
   "exports": {
@@ -16,6 +16,22 @@
     "build": "node ./src/build.js",
     "prepublishOnly": "npm run build",
     "test": "node ./src/selftest.js"
+  "bin": {
+    "scxq2-es-verify": "./dist/bin/scxq2-es-verify.js"
+  },
+  "files": ["dist", "README.md", "LICENSE"],
+  "scripts": {
+    "build": "node src/build.js",
+    "prepublishOnly": "npm run build",
+    "test": "node src/selftest.js"
+  },
+  "peerDependencies": {
+    "@asx/scxq2-cc": ">=1.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@asx/scxq2-cc": {
+      "optional": true
+    }
   },
   "keywords": [
     "scxq2",
@@ -24,6 +40,8 @@
     "painless",
     "compiler",
     "transpiler"
+    "abi",
+    "kuhul"
   ],
   "license": "MIT",
   "author": "ASX",
