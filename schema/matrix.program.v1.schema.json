@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "kuhul://schema/matrix/program/v1",
+  "title": "matrix.program.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["format", "program"],
+  "properties": {
+    "format": { "const": "matrix.program.v1" },
+    "program": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "entry", "blocks"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "entry": { "type": "string", "minLength": 1 },
+        "blocks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["op", "args"],
+            "properties": {
+              "op": { "type": "string", "minLength": 1 },
+              "args": { "type": "object" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

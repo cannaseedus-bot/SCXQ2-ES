@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "kuhul://schema/matrix/policy/v1",
+  "title": "matrix.policy.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "matrix_policy_version",
+    "max_depth",
+    "allow_network",
+    "allow_exec",
+    "allow_fs_read",
+    "allow_fs_write",
+    "allow_idb",
+    "allow_crypto",
+    "allowed_routes",
+    "allowed_plugins"
+  ],
+  "properties": {
+    "matrix_policy_version": { "const": 1 },
+    "max_depth": { "type": "integer", "minimum": 1, "maximum": 4096 },
+
+    "allow_network": { "type": "boolean" },
+    "allow_exec": { "type": "boolean" },
+    "allow_fs_read": { "type": "boolean" },
+    "allow_fs_write": { "type": "boolean" },
+    "allow_idb": { "type": "boolean" },
+    "allow_crypto": { "type": "boolean" },
+
+    "allowed_routes": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 0
+    },
+    "allowed_plugins": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 0
+    },
+
+    "field_allowlist": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": []
+    },
+    "param_allowlist": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": []
+    }
+  }
+}

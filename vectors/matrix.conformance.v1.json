@@ -1,0 +1,84 @@
+{
+  "format": "matrix.conformance.v1",
+  "vectors": [
+    {
+      "name": "gql_query_collapsed_users_list",
+      "policy": {
+        "matrix_policy_version": 1,
+        "max_depth": 64,
+        "allow_network": false,
+        "allow_exec": false,
+        "allow_fs_read": false,
+        "allow_fs_write": false,
+        "allow_idb": true,
+        "allow_crypto": true,
+        "allowed_routes": ["idb.query", "event.reply"],
+        "allowed_plugins": ["idb", "kql"]
+      },
+      "program": {
+        "format": "matrix.program.v1",
+        "program": {
+          "name": "users_list",
+          "entry": "main",
+          "blocks": [
+            {
+              "op": "idb.query",
+              "args": {
+                "store": "users",
+                "kql": {
+                  "SELECT": { "fields": ["id", "name"] },
+                  "FROM": { "sources": ["users"] },
+                  "LIMIT": 2
+                }
+              }
+            },
+            {
+              "op": "event.reply",
+              "args": {
+                "event": "users.list.reply",
+                "body_from": "last"
+              }
+            }
+          ]
+        }
+      },
+      "input_event": {
+        "event": "users.list.request",
+        "v": 1,
+        "id": "01HZZZZZZZZZZZZZZZZZZZZZZZ",
+        "ts": 0,
+        "actor": { "user_id": "u1", "session_id": "s1" },
+        "scope": { "app_id": "app1", "tenant": "t1" },
+        "input": { "limit": 2 },
+        "claims": {},
+        "proof": {
+          "abi_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+          "policy_hash": "0000000000000000000000000000000000000000000000000000000000000000"
+        }
+      },
+      "pre_state": {
+        "idb": {
+          "users": [
+            { "id": "1", "name": "Ada" },
+            { "id": "2", "name": "Bob" },
+            { "id": "3", "name": "Cy" }
+          ]
+        }
+      },
+      "expect": {
+        "reply_event": {
+          "event": "users.list.reply",
+          "v": 1,
+          "input": {
+            "rows": [
+              { "id": "1", "name": "Ada" },
+              { "id": "2", "name": "Bob" }
+            ]
+          }
+        },
+        "writes": [],
+        "emits": []
+      }
+    }
+  ]
+}

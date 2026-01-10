@@ -1,0 +1,27 @@
+{
+  "format": "matrix.program.v1",
+  "program": {
+    "name": "users_list",
+    "entry": "main",
+    "blocks": [
+      {
+        "op": "idb.query",
+        "args": {
+          "store": "users",
+          "kql": {
+            "SELECT": { "fields": ["id", "name"] },
+            "FROM": { "sources": ["users"] },
+            "LIMIT": 2
+          }
+        }
+      },
+      {
+        "op": "event.reply",
+        "args": {
+          "event": "users.list.reply",
+          "body_from": "last"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "kuhul://schema/matrix/abi/v1",
+  "title": "matrix.abi.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "abi",
+    "abi_version",
+    "surface",
+    "target",
+    "symbols_hash",
+    "policy_hash",
+    "transpiler_hash",
+    "program_hash",
+    "io_schema_hash",
+    "capabilities_hash"
+  ],
+  "properties": {
+    "abi": { "const": "matrix" },
+    "abi_version": { "const": 1 },
+    "surface": { "const": "matrix.v1" },
+    "target": { "type": "string" },
+
+    "symbols_hash": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "policy_hash": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "transpiler_hash": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "program_hash": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "io_schema_hash": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "capabilities_hash": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+
+    "timestamp": { "type": "integer", "minimum": 0, "default": 0 },
+    "nonce": { "type": "string" }
+  }
+}
