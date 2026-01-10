@@ -1,14 +1,9 @@
 
-# @asx/scxq2-es  (first we build the gut hub pack then we build the npm pack)
+# @asx/scxq2-es
 
-
-````md
 Inline SCXQ2 authoring surface → **Elasticsearch Painless** lowering (safe expression subset).
-````
 
-
-
-# SCXQ2-ES README
+This repository is the **npm pack scaffold** for the v1 spec and lowering entrypoint.
 ## What this is
 ````
 `@asx/scxq2-es` provides a **v1 expression surface grammar** and a lowering pipeline to emit **Elasticsearch Painless** scripts for:
@@ -52,6 +47,9 @@ double __pop = (doc.containsKey('popularity') && !doc['popularity'].empty) ? doc
 return (__score * (__rating > 4.5 ? 2.0 : 1.0)) + Math.min(50.0, Math.max(0.0, __pop));
 ```
 
+> Note: `compilePainless` currently returns the input unchanged and emits a warning
+> until the parser/policy/lowering implementation is added.
+
 ## SCXQ2-ES v1 Grammar
 
 This package implements **SCXQ2-ES v1**, an expression subset designed to map cleanly into Painless.
@@ -82,9 +80,10 @@ Compilation includes a strict policy gate:
 
 ## GitHub-first workflow (recommended)
 
-1. Commit the repo.
-2. Tag a release.
-3. Publish to npm.
+1. Build the dist outputs: `npm run build`
+2. Commit the repo.
+3. Tag a release.
+4. Publish to npm.
 
 ## License
 
@@ -94,68 +93,7 @@ MIT
 
 ---
 
-# 3) NPM pack scaffold (minimal repo layout)
-
-Create this structure:
-
-```
-
-scxq2-es/
-package.json
-README.md
-LICENSE
-src/
-index.js
-grammar_v1.ebnf.txt
-policy_v1.js
-lower_painless_v1.js
-dist/
-(built output)
-
-````
-
-## 3.1 `package.json`
-
-```json
-{
-  "name": "@asx/scxq2-es",
-  "version": "0.1.0",
-  "description": "SCXQ2 authoring surface → Elasticsearch Painless lowering (expression-only v1).",
-  "type": "module",
-  "main": "dist/index.js",
-  "exports": {
-    ".": "./dist/index.js"
-  },
-  "files": ["dist", "README.md", "LICENSE"],
-  "scripts": {
-    "build": "node ./src/build.js",
-    "prepublishOnly": "npm run build",
-    "test": "node ./src/selftest.js"
-  },
-  "keywords": ["scxq2", "asx", "elasticsearch", "painless", "compiler", "transpiler"],
-  "license": "MIT",
-  "author": "ASX",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/<YOU>/scxq2-es.git"
-  }
-}
-````
-
-> Replace the repo URL once you create it.
-
-## 3.2 `src/index.js` (API surface)
-
-```js
-export { compilePainless } from "./lower_painless_v1.js";
-export { SCXQ2_ES_V1_EBNF } from "./grammar_v1.ebnf.txt.js";
-```
-
-## 3.3 `src/grammar_v1.ebnf.txt`
-
-Paste the EBNF from section (1) as-is.
-
-## 3.4 `npm pack` flow (GitHub first)
+# NPM pack flow (GitHub first)
 
 ```bash
 git init
