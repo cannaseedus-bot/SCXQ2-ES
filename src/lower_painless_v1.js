@@ -1,3 +1,22 @@
+const DEFAULT_WARNING =
+  "compilePainless currently returns the input unchanged; parser/policy/lowering not implemented.";
+
+export function compilePainless(scxq2, options = {}) {
+  if (typeof scxq2 !== "string") {
+    throw new TypeError("compilePainless expects the SCXQ2 source to be a string.");
+  }
+
+  const trimmed = scxq2.trim();
+  const context = options.context ?? null;
+
+  return {
+    painless: trimmed,
+    warnings: [DEFAULT_WARNING],
+    meta: {
+      context,
+      fields: options.fields ?? null,
+      params: options.params ?? null,
+    },
 import { enforcePolicy } from "./policy_v1.js";
 import { computeAbiEnvelope, computeAbiHash } from "./abi_v1.js";
 
@@ -7,6 +26,15 @@ function tokenize(input) {
   const tokens = [];
   const re =
     /\s*([()?:,]|==|!=|<=|>=|\|\||&&|\?\?|[+\-*/%<>&|!]|@?[A-Za-z_][A-Za-z0-9_]*|'[^']*'|"[^"]*"|\d+(?:\.\d+)?|\.\d+)/g;
+/**
+ * IMPORTANT:
+ * - "??" MUST be matched before single "?" token class.
+ * - "." must be tokenized to support params.w
+ */
+function tokenize(input) {
+  const tokens = [];
+  const re =
+    /\s*(\?\?|==|!=|<=|>=|\|\||&&|[().?:,]|[+\-*/%<>&|!]|@?[A-Za-z_][A-Za-z0-9_]*|'[^']*'|"[^"]*"|\d+(?:\.\d+)?|\.\d+)/g;
   let m;
   while ((m = re.exec(input))) tokens.push(m[1]);
   return tokens;
@@ -95,6 +123,7 @@ function parse(tokens) {
   function parsePostfix() {
     let left = parsePrimary();
     // v1 supports coalesce "a ?? b" (optional; still parsed deterministically)
+    // v1 supports coalesce "a ?? b"
     if (peek() === "??") {
       next();
       const right = parsePrimary();
@@ -114,6 +143,12 @@ function parse(tokens) {
 
     if (t === "_score") return { type: "score" };
 
+    // literals
+    if (t === "null") return { type: "null" };
+    if (t === "true") return { type: "bool", value: true };
+    if (t === "false") return { type: "bool", value: false };
+
+    // calls: @name(...)
     if (t.startsWith("@")) {
       const name = t.slice(1);
       if (next() !== "(") throw new Error("Expected '('");
@@ -129,15 +164,18 @@ function parse(tokens) {
       return { type: "call", name, args };
     }
 
+    // strings
     if (t.startsWith("'") || t.startsWith("\"")) {
       return { type: "string", value: t.slice(1, -1) };
     }
 
+    // number
     if (!isNaN(t)) {
       return { type: "number", value: t };
     }
 
     // params.<name> support (optional)
+    // params.<name>
     if (t === "params" && peek() === ".") {
       next(); // dot
       const id = next();
@@ -156,6 +194,10 @@ function parse(tokens) {
 
 function emit(node) {
   switch (node.type) {
+    case "null":
+      return "null";
+    case "bool":
+      return node.value ? "true" : "false";
     case "number":
       return node.value;
     case "string":
@@ -188,6 +230,9 @@ function escapeSingleQuoted(s) {
 function ensureArity(name, args, min, max) {
   if (args.length < min || args.length > max) {
     throw new Error(`Call arity error: @${name} expects ${min}${min !== max ? ".." + max : ""} args, got ${args.length}`);
+    throw new Error(
+      `Call arity error: @${name} expects ${min}${min !== max ? ".." + max : ""} args, got ${args.length}`
+    );
   }
 }
 
