@@ -1,11 +1,12 @@
+
 # @asx/scxq2-es 
+
 
 ````md
 Inline SCXQ2 authoring surface → **Elasticsearch Painless** lowering (safe expression subset).
 ````
-<p align="center">
 
-</p>
+
 
 # SCXQ2-ES README
 ## What this is
