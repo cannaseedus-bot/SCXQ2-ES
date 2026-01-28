@@ -1,7 +1,7 @@
 {
   "name": "@asx/matrix-runtime",
   "version": "0.1.0",
-  "description": "MATRIX Runtime v0.1: ABI-locked event backend substrate (GraphQL collapsed into MATRIX events) + IDB plane + verifier + host projections.",
+  "description": "SCXQ2-ES: JavaScript bridge for Kuhul events and SCXQ2 backends. ABI-locked, policy-gated MATRIX runtime with deterministic execution, IDB plane, and multi-host support (Node, Cloudflare, GAS, Java, PHP).",
   "type": "module",
   "exports": {
     ".": "./dist/index.js",
@@ -29,15 +29,19 @@
     "test": "node dist/bin/matrix-vectors.js vectors/matrix.conformance.v1.json"
   },
   "keywords": [
+    "scxq2",
+    "kuhul",
+    "javascript-bridge",
     "matrix",
     "abi",
     "events",
     "idb",
     "kql",
     "asx",
-    "kuhul",
     "verifier",
-    "serverless"
+    "serverless",
+    "deterministic",
+    "policy-gated"
   ],
   "license": "MIT"
 }
