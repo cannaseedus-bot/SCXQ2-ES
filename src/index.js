@@ -27,3 +27,5 @@ export {
 export {
   matrixVerifyMiddleware
 } from "./middleware/node.js";
+
+export { default as scxq2Handlers } from "./handlers/scxq2.js";
