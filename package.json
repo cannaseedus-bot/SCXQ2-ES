@@ -28,6 +28,9 @@
     "prepublishOnly": "npm run build",
     "test": "node dist/bin/matrix-vectors.js vectors/matrix.conformance.v1.json"
   },
+  "dependencies": {
+    "fs-extra": "^11.2.0"
+  },
   "keywords": [
     "scxq2",
     "kuhul",
